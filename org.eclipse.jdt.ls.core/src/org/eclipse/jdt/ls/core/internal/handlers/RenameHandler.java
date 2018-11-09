@@ -12,6 +12,7 @@
 
 package org.eclipse.jdt.ls.core.internal.handlers;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.eclipse.core.runtime.CoreException;
@@ -24,8 +25,12 @@ import org.eclipse.jdt.ls.core.internal.JDTUtils;
 import org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin;
 import org.eclipse.jdt.ls.core.internal.corext.refactoring.rename.RenameSupport;
 import org.eclipse.jdt.ls.core.internal.preferences.PreferenceManager;
+import org.eclipse.lsp4j.RenameOptions;
 import org.eclipse.lsp4j.RenameParams;
+import org.eclipse.lsp4j.ResourceOperation;
+import org.eclipse.lsp4j.TextDocumentEdit;
 import org.eclipse.lsp4j.WorkspaceEdit;
+import org.eclipse.lsp4j.jsonrpc.messages.Either;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.CheckConditionsOperation;
 import org.eclipse.ltk.core.refactoring.CreateChangeOperation;
@@ -33,6 +38,12 @@ import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.participants.RenameRefactoring;
 
 public class RenameHandler {
+
+	public static RenameOptions createOptions() {
+		RenameOptions renameOptions = new RenameOptions();
+		renameOptions.setPrepareProvider(true);
+		return renameOptions;
+	}
 
 	private PreferenceManager preferenceManager;
 

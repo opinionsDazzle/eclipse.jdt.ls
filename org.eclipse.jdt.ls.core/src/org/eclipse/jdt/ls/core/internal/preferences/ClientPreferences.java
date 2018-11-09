@@ -18,6 +18,7 @@ import java.util.Map;
 import org.eclipse.lsp4j.ClientCapabilities;
 import org.eclipse.lsp4j.DynamicRegistrationCapabilities;
 import org.eclipse.lsp4j.MarkupKind;
+import org.eclipse.lsp4j.ResourceOperationKind;
 
 /**
  * A wrapper around {@link ClientCapabilities}
@@ -175,6 +176,16 @@ public class ClientPreferences {
 
 	public boolean isWorkspaceEditResourceChangesSupported() {
 		return capabilities.getWorkspace() != null && capabilities.getWorkspace().getWorkspaceEdit() != null && isTrue(capabilities.getWorkspace().getWorkspaceEdit().getResourceChanges());
+	}
+
+	@Deprecated
+	public boolean isResourceOperationSupported() {
+		//@formatter:off
+		return capabilities.getWorkspace() != null && capabilities.getWorkspace().getWorkspaceEdit() != null
+				&& capabilities.getWorkspace().getWorkspaceEdit().getResourceOperations().contains(ResourceOperationKind.Create)
+				&& capabilities.getWorkspace().getWorkspaceEdit().getResourceOperations().contains(ResourceOperationKind.Rename)
+				&& capabilities.getWorkspace().getWorkspaceEdit().getResourceOperations().contains(ResourceOperationKind.Delete);
+		//@formatter:on
 	}
 
 	/**
